@@ -109,6 +109,7 @@ com.cora.api
 - `spring-boot-starter-validation` *(opcional)*
 - `h2` (runtime)
 - `spring-boot-starter-test` (test)
+- `springdoc-openapi-starter-webmvc-ui` **2.x** — Swagger UI + OpenAPI 3
 
 Parent: `spring-boot-starter-parent` 3.x; `java.version` **17** (ou 21).
 
@@ -177,6 +178,7 @@ ou `mvn test`.
 5. H2: console e credenciais de acesso.
 6. CORS em dev.
 7. Pré-requisitos: JDK e Maven (só para build local sem Docker).
+8. **Documentação:** Swagger UI (`/swagger-ui.html`) e JSON OpenAPI (`/v3/api-docs`).
 
 ---
 
@@ -191,6 +193,8 @@ ou `mvn test`.
 - [ ] H2 operacional.
 - [ ] Testes passando (`mvn test`).
 - [ ] README atualizado (incluindo Docker).
+- [ ] **Swagger UI acessível** em `http://localhost:8080/swagger-ui.html`.
+- [ ] **JSON OpenAPI** disponível em `http://localhost:8080/v3/api-docs`.
 
 ---
 
@@ -261,4 +265,59 @@ A API fica em **`http://localhost:8080`** (host). Console H2: `http://localhost:
 
 ---
 
-Implementar conforme seções **4–7**, **14** e validar com **9** e **11**.
+Implementar conforme seções **4–7**, **14–15** e validar com **9** e **11**.
+
+---
+
+## 15. OpenAPI / Swagger UI
+
+### 15.1 Objetivo
+
+Gerar documentação interativa automática da API a partir de anotações no código-fonte, sem manutenção manual de arquivos YAML/JSON.
+
+### 15.2 Dependência
+
+```xml
+<dependency>
+    <groupId>org.springdoc</groupId>
+    <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+    <version>2.8.8</version>
+</dependency>
+```
+
+### 15.3 URLs
+
+| Recurso | URL |
+|---------|-----|
+| **Swagger UI** (interface interativa) | `http://localhost:8080/swagger-ui.html` |
+| **JSON OpenAPI 3** (spec bruta) | `http://localhost:8080/v3/api-docs` |
+
+### 15.4 Configuração (`application.yml`)
+
+```yaml
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs
+```
+
+### 15.5 Anotações por camada
+
+| Camada | Anotação | Uso |
+|--------|----------|-----|
+| Config | `@Bean OpenAPI` | Título, descrição e versão da API |
+| Controller (classe) | `@Tag` | Agrupa endpoints por domínio |
+| Controller (método) | `@Operation` | Resumo e descrição do endpoint |
+| Controller (método) | `@ApiResponse` | Códigos HTTP e corpo de resposta documentados |
+| DTO (classe) | `@Schema` | Descrição do objeto |
+| DTO (campo) | `@Schema` | Descrição e exemplo de cada campo |
+
+### 15.6 Arquivos envolvidos
+
+| Arquivo | Ação |
+|---------|------|
+| `config/OpenApiConfig.java` | Bean `OpenAPI` com metadados (`Info`) |
+| `account/AccountController.java` | `@Tag`, `@Operation`, `@ApiResponse` nos endpoints |
+| `account/dto/CreateAccountRequest.java` | `@Schema` na classe e campos |
+| `account/dto/AccountResponse.java` | `@Schema` na classe e campos |
