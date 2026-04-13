@@ -10,4 +10,3 @@ public class CoraApiApplication {
         SpringApplication.run(CoraApiApplication.class, args);
     }
 }
-

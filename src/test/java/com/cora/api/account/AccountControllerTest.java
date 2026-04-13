@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
 @SuppressWarnings("unused")
-class AccountControllerIT {
+class AccountControllerTest {
 
     @Autowired
     MockMvc mockMvc;

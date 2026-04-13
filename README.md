@@ -110,6 +110,17 @@ CORS liberado para desenvolvimento em **`http://localhost:3000`**, **`http://loc
 | **User** | `sa` |
 | **Password** | *(vazio)* |
 
+## Documentação
+
+A documentação interativa da API é gerada automaticamente pelo **Springdoc / Swagger UI**.
+
+| Recurso | URL |
+|---------|-----|
+| **Swagger UI** (interface interativa) | [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html) |
+| **JSON OpenAPI 3** (spec bruta) | [http://localhost:8080/v3/api-docs](http://localhost:8080/v3/api-docs) |
+
+A interface Swagger UI permite explorar os endpoints, visualizar os esquemas de request/response e executar chamadas diretamente pelo browser.
+
 ## Testes
 
 ```bash
